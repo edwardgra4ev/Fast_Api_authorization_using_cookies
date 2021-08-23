@@ -1,0 +1,106 @@
+<!DOCTYPE html5>
+<html>
+   <head>
+        <meta charset="utf-8" />
+        <title>Authorization</title>
+        <link rel="stylesheet" type="text/css" href="./application/tmp/css/login.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style type="text/css">
+            body{
+                margin: 0;
+                position: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background-color: #292D3E;
+            }
+            .placeholder {
+                flex: 1;
+            }
+            form{
+                width: 90%;
+                min-width: 250px;
+                max-width: 350px;
+                align-items: center;
+            }
+            .inp{
+                display: block;
+                font-size: 13px;
+                padding: 15px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                width: 100%;
+            }
+            .sing{
+                font-size: 13px;
+                padding: 15px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                width: 48%;
+            }
+            .buttons {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            #error {
+                color: #ccc;
+            }
+        </style>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function(){
+                let btn_in = document.getElementById("sing_in");
+                let btn_up = document.getElementById("sing_up");
+                let error_message = document.getElementById('error');
+                btn_up.addEventListener('click', async function(event){
+                    event.preventDefault();
+                    window.location.href = '/registration';
+                })
+                btn_in.addEventListener('click', async function(event){
+                    event.preventDefault();
+                    let username = document.querySelector("input[type=text]").value;
+                    let password = document.querySelector("input[type=password]").value;
+                    if (username.length == 0 || password.length == 0){
+                        error_message.innerText = "The Username and Password fields cannot be empty"
+                        return
+                    }
+                    else if (username.length < 4){
+                        error_message.innerText = "Username must not be less than 4 characters long"
+                        return
+                    }
+                    else if (password.length < 6){
+                        error_message.innerText = "Password must not be less than 6 characters long"
+                        return
+                    }
+                    let response = await fetch("/login", {
+                        method: "POST",
+                        body: new FormData(document.querySelector('form'))
+                    });
+                    let response_json = await response.json();
+                    if (response_json["success"] == true){
+                        window.location.href = '/personal_area';
+                    }
+                    else {
+                        error_message.innerText = "Incorrect authorization data is specified!"
+                    }
+                })
+            })
+        </script>
+   </head>
+   <body>
+        <div class="placeholder"></div>
+        <form method="POST" action="/login">
+            <input type="text" name="username" placeholder="Your username:" class="inp"/>
+            <input type="password" name="password" placeholder="Your password:" class="inp"/>
+            <p id="error"></p>
+            <div class="buttons">
+                <input type="submit" value="Sing up" id="sing_up" class="sing" />
+                <input type="submit" value="Sing in" id="sing_in" class="sing"/>
+            </div>
+        </form>
+        <div class="placeholder"></div>
+   </body>
+</html>

@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    position: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.placeholder {
+    flex: 1;
+}
+form {
+    width: 90%;
+    min-width: 250px;
+    max-width: 350px;
+}
+input {
+    display: block;
+    font-size: 13px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 100%;
+}
