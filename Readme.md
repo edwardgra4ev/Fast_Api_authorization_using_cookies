@@ -1,4 +1,4 @@
-# Пример авторизации через cookies на FastApi
+# Пример авторизации через сookie на FastApi
 ## Использование 
 ```bash
 python3.9 -m venv env
